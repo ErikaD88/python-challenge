@@ -1,19 +1,23 @@
 import os
-import csv 
+import csv
 
 # Set relative path for csv file
 budget_csv = os.path.join('Resources', 'budget_data.csv')
+
 with open(budget_csv, 'r') as csvfile:
     reader = csv.reader(csvfile, delimiter=",")
-    next(reader)
+    
+    # Store the header row
+    header = next(reader)
+    print("Header Row:", header)
 
     # Define variables to track the financial data
-    count = 0 
+    count = 0
     total = 0
-    prev_profit = 0 
+    prev_profit = 0
     net_change_list = []
     month_of_change = []
-    total_change = 0 
+    total_change = 0
     
     # Process each row of data
     for row in reader:
@@ -37,20 +41,11 @@ with open(budget_csv, 'r') as csvfile:
     max_decrease = min(net_change_list)
     max_decrease_month = month_of_change[net_change_list.index(max_decrease)]
 
-# Final output for Financial Analysis
-output = (
-    f"\nFinancial Analysis\n"
-    f"----------------------------\n"
-    f"Total Months: {count}\n"
-    f"Total: ${total}\n"
-    f"Average Change: ${avg_change:.2f}\n"
-    f"Greatest Increase in Profits: {max_increase_month} (${max_increase})\n"
-    f"Greatest Decrease in Profits: {max_decrease_month} (${max_decrease})\n"
-)
-
-print(output)
-
-# Exporting to text file
-output_file = os.path.join('Analysis', 'pyBank_output.txt')
-with open(output_file, "w") as pyBankoutput:
-    pyBankoutput.write(output)
+    # Print Results
+    print("Financial Analysis")
+    print("----------------------------")
+    print(f"Total Months: {count}")
+    print(f"Total: ${total}")
+    print(f"Average Change: ${avg_change:.2f}")
+    print(f"Greatest Increase in Profits: {max_increase_month} (${max_increase})")
+    print(f"Greatest Decrease in Profits: {max_decrease_month} (${max_decrease})")
